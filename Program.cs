@@ -134,11 +134,42 @@ namespace ClassyHeist
             while(newName != "");
 
             ///Now all the crew members have been added, it's time to plan a heist
-            
+            Bank bank1 = new Bank();
+            bank1.ReconReport();
 
-            // foreach(IRobber robber in rolodex){
-            //     Console.WriteLine(robber);
-            // }
+            //Let's build a crew
+            Console.WriteLine("");
+            Console.WriteLine("Now that we know what we're dealing with let's build a crew.");
+            Console.WriteLine("");
+
+            List<IRobber> crew = new List<IRobber>(){};
+            int cutAvailable = 100;
+            bool readyForHeist = false;
+
+            while(!readyForHeist)
+            {
+                for(int x = 0; x < rolodex.Count; x++){
+                    if(rolodex[x].PercentageCut < cutAvailable && !crew.Contains(rolodex[x]))
+                    {
+                        Console.WriteLine(x+1 + ". " + rolodex[x]);
+                    }
+                }
+
+                Console.WriteLine("Type in the number of the person you want to add or press Enter to run the Heist");
+                string stringCrewChoice = Console.ReadLine();
+                if(stringCrewChoice != String.Empty){
+                    int crewChoice = Int32.Parse(stringCrewChoice)-1;
+                    crew.Add(rolodex[crewChoice]);
+                    Console.WriteLine($"{rolodex[crewChoice].Name} was added to the crew");
+                    Console.WriteLine("----------------------------------------------------------------------------------");
+                    Console.WriteLine("");
+                }
+                else{
+                    readyForHeist = true;
+                }
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Let's rob a bank!");
         }
     }
 }
